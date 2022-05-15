@@ -101,14 +101,6 @@ celerybeat.pid
 # SageMath parsed files
 *.sage.py
 
-# Environments
-.env
-.venv
-env/
-venv/
-ENV/
-env.bak/
-venv.bak/
 
 # Spyder project settings
 .spyderproject
@@ -127,3 +119,16 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+
+# Env local
+mongodb_env.py
+server_env.py
+virustotal_env.py
+
+# Docker volume
+volume/
+
+# Cert/keys/Pem
+*.key
+*.crt
+*.pem
