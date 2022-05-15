@@ -1,4 +1,4 @@
-import json
+import json,requests,os,sys,inspect
 
 from flask import Flask, jsonify, request
 from flask_cors import CORS
@@ -63,6 +63,8 @@ def getDataEdr():
 
 if __name__ == "__main__":
     if SECURE_MODE:
-        app.run(host=HOSTNAME_FLASK, port=int(PORT_FLASK), ssl_context=("./server_ssl/server.crt", "./server_ssl/server.key"))
+        currentdir = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
+        parentdir = os.path.dirname(currentdir+"/server_ssl/")
+        app.run(host=HOSTNAME_FLASK, port=int(PORT_FLASK), ssl_context=("{}/server.crt".format(parentdir), "{}/server.key".format(parentdir)))
     else:
         app.run(host=HOSTNAME_FLASK, port=int(PORT_FLASK))
