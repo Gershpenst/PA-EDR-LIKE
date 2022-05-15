@@ -7,7 +7,7 @@
 
 ## Installation des packages python3
 ```bash
-$ pip3 install Flask Flask-Cors
+$ pip3 install Flask Flask-Cors pymongo
 ```
 
 ## Modification des variables d'environnement
