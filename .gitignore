@@ -132,3 +132,4 @@ volume/
 *.key
 *.crt
 *.pem
+*.csr

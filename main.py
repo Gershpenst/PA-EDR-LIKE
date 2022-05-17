@@ -1,9 +1,9 @@
-import json,requests,os,sys,inspect
+import json,requests,os,ssl,sys,inspect
 
 from flask import Flask, jsonify, request
 from flask_cors import CORS
 
-from env.server_env import HOSTNAME_FLASK, PORT_FLASK, SECURE_MODE
+from env.server_env import HOSTNAME_FLASK, PORT_FLASK, SECURE_MODE, VERIFIED_USER
 
 from tools.response import bodyMessageError, bodyMessageValid
 
@@ -61,10 +61,19 @@ def getDataEdr():
     get_data_edr = getDataEdrApi(request.args)
     return jsonify(get_data_edr)
 
+
 if __name__ == "__main__":
+    context = None
     if SECURE_MODE:
         currentdir = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
-        parentdir = os.path.dirname(currentdir+"/server_ssl/")
-        app.run(host=HOSTNAME_FLASK, port=int(PORT_FLASK), ssl_context=("{}/server.crt".format(parentdir), "{}/server.key".format(parentdir)))
-    else:
-        app.run(host=HOSTNAME_FLASK, port=int(PORT_FLASK))
+        parentdir = os.path.dirname(currentdir+"/certificate/")
+        SERVER_CRT = "{}/server.crt".format(parentdir)
+        SERVER_PRIV_KEY =  "{}/server.key".format(parentdir)
+        CA_CRT = "{}/ca.crt".format(parentdir)
+        
+        context = ssl.SSLContext(ssl.PROTOCOL_TLSv1_2)
+        if VERIFIED_USER:
+            context.verify_mode = ssl.CERT_REQUIRED
+        context.load_verify_locations(CA_CRT)
+        context.load_cert_chain(SERVER_CRT, SERVER_PRIV_KEY)
+    app.run(host=HOSTNAME_FLASK, port=int(PORT_FLASK), ssl_context=context)
