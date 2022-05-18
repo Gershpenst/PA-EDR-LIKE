@@ -47,6 +47,7 @@ Puis modifier les données qui y sont présent. La donnée `<API_TOKEN_VT>` se t
 HOSTNAME_FLASK = "0.0.0.0"
 PORT_FLASK = 4444
 SECURE_MODE = True
+VERIFIED_USER = True
 ```
 
 Si la variable `SECURE_MODE` est en `True` (mode `HTTPS`), il faudra générer le certificat du serveur. Nous allons créer un CA afin de créer le serveur.
@@ -75,7 +76,7 @@ $ # Verifying certificate
 $ openssl verify -CAfile ca.crt ca.crt client.crt
 ```
 
-> :warning: **Whatever method you use to generate the certificate and key files, the Common Name value used for the server and client certificates/keys must each differ from the Common Name value used for the CA certificate. Otherwise, the certificate and key files do not work for servers compiled using OpenSSL.**:
+> :warning: **Whatever method you use to generate the certificate and key files, the Common Name value used for the server and client certificates/keys must each differ from the Common Name value used for the CA certificate. Otherwise, the certificate and key files do not work for servers compiled using OpenSSL.
 
 ## Execution du serveur
 ```bash
